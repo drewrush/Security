@@ -1,0 +1,23 @@
+login admin password on server;
+
+set column_width 150;
+
+spool on to 'c:\perl\Security\Users.txt';
+display user all;
+spool off;
+
+spool on to 'c:\perl\Security\Groups.txt';
+display group all;
+spool off;
+
+spool on to 'c:\perl\Security\UserGroups.txt';
+display user in group all;
+spool off;
+
+spool on to 'c:\perl\Security\UserPriv.txt';
+display privilege user all;
+spool off;
+
+spool on to 'c:\perl\Security\GroupPriv.txt';
+display privilege group all;
+spool off;
