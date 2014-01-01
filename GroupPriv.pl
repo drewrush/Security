@@ -2,32 +2,25 @@ use strict;
 use warnings;
 
 while (<>) {
-    s/^ //m;
-	if (/^([^\\]+?)( {80,})/) {
-		my $atindex = rindex($1,"@",);
-		my $groupname = substr($1,0,$atindex);
-		if ($atindex != -1) {
-			s/^([^\\]+?)( {80,})/$groupname  $2/m;
-			s/ {2,}/ \\ \\ /g;
-			s/\\ \d$//gm;
-			s/ \\ $//gm;
-		}
+
+    $_ =~ s/^\s+//;
+	$_ =~ s/ +\d$/ /g;
+	my @fields = split(/\s{2,}/);
+	
+	my $atindex, my $groupname;
+	
+	if (@fields) {
+	$atindex = rindex($fields[0],"@",);
+	$groupname = substr($fields[0],0,$atindex);
 	}
-	if (/([^\\]+) \\ \\ ([^\\]+) \\ \\ ([^\\]+) \\ \\ ([^\\]+)\n/) {
-		if ($4 eq "any") {
-			my $execany = "execute any";
-			print "grant $execany on database '$2'.'$3' to group '$1';\n";
-		} else {
-			print "grant $4 on database '$2'.'$3' to group '$1';\n";
-		}
-	} elsif (/([^\\]+) \\ \\ ([^\\]+) \\ \\ ([^\\]+)\n/) {
-	    if ($3 eq "any") {
-			my $execany = "execute any";
-			print "grant $execany on application '$2' to group '$1';\n";
-		} else {
-			print "grant $3 on application '$2' to group '$1';\n";
-		}
-	} elsif (/([^\\]+) \\ \\ ([^\\]+)\n/) {
-		print "grant $2 to group '$1';\n";
-	}
-}
+
+	if (scalar @fields < 2 || $fields[0] eq 'holder') {
+	} elsif (!$fields[2]) {
+		print "grant $fields[1] to group '$groupname';\n";
+	} elsif (!$fields[3]) {
+		print "grant ", ($fields[2] eq 'any') ? 'execute any' : $fields[2]," on application '$fields[1]' to group '$groupname';\n";
+	} else {
+		print "grant ", ($fields[3] eq 'any') ? 'execute any' : $fields[3]," on database '$fields[1]'.'$fields[2]' to group '$groupname'\n";
+	} 
+
+};
