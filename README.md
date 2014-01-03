@@ -4,6 +4,7 @@ Perl Security Utility
 Updates
 12/30/2013 
 01/01/2014
+01/03/2014
 
 Introduction
 =============
@@ -13,15 +14,16 @@ This utility is used to automatically produce MaxL commands that can be run on a
 Table of Contents
 =================
 
-01. MaxL Commands for the Current Server
-02. The Batch File
-03. Auto.mxl
-04. Perl Scripts
-05. Notes on Usage
+1. MaxL Commands for the Current Server
+2. The Batch File
+3. Auto.mxl
+4. Perl Scripts
+5. Application and Database Filtering 
+6. Notes on Usage
 
 
 
-01. MaxL Commands for the Current Server
+1. MaxL Commands for the Current Server
 =========================================
 There are five MaxL commands that provide an administrator with information about the security settings for an Essbase Server. They are:
 
@@ -40,7 +42,7 @@ There are other commands that can be used to get information about an Essbase Se
 5. Show the security assignments for each group on the current server.
 
 
-02. The Batch File
+2. The Batch File
 ===================
 
 The batch file is run in Windows and executes three processes:
@@ -50,7 +52,7 @@ The batch file is run in Windows and executes three processes:
 3. Transforms the text files from step 1 into MaxL commands for future execution
 
 
-03. Auto.mxl
+3. Auto.mxl
 =============
 
 This MaxL script executes the five MaxL commands mentioned in Section 01 of this readme and writes the results to five separate text files. They are:
@@ -65,7 +67,7 @@ The script includes generic username, password, and server information that need
 
 http://docs.oracle.com/cd/E12825_01/epm.111/esb_techref/frameset.htm?maxl_invoke_encrypt.htm
 
-04. Perl Scripts
+4. Perl Scripts
 =================
 
 There are five Perl scripts that transform the text files listed in Section 04 of this readme into MaxL files. These scripts make use of Perl RegEx to perform the transformations. There are five scripts in all:
@@ -79,7 +81,7 @@ There are five Perl scripts that transform the text files listed in Section 04 o
 These scripts take into account the naming restrictions of Essbase Users, Groups, Applications, and Databases.
 
 
-05. Notes on Usage
+5. Notes on Usage
 ===================
 
 This project currently produces MaxL commands for all applications on the Essbase server that are subject to the commands described in Section 01 of this readme. This includes Planning databases for example. A future update will include a way to restrict the production of MaxL commands for only Essbase applications.
